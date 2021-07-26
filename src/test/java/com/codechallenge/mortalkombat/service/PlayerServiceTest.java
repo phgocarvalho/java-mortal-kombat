@@ -18,13 +18,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @DirtiesContext
-@EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" })
+@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 class PlayerServiceTest {
 
     @Autowired
@@ -35,7 +35,7 @@ class PlayerServiceTest {
 
     @BeforeEach
     void setUp() {
-        repository.deleteAll();
+        this.repository.deleteAll();
     }
 
     @Test
@@ -46,21 +46,21 @@ class PlayerServiceTest {
                 new PlayerDTO("Reptile", "meh"));
         PlayerRequestDTO playerRequestDTO = new PlayerRequestDTO(playerDTOList);
 
-        PlayerResponseDTO playerResponseDTO = service.process(playerRequestDTO);
+        PlayerResponseDTO playerResponseDTO = this.service.process(playerRequestDTO);
 
         assertEquals(3, playerResponseDTO.getResult().size());
         assertEquals("player Sub zero stored in DB", playerResponseDTO.getResult().get(0));
         assertEquals("player Scorpion sent to Kafka topic", playerResponseDTO.getResult().get(1));
-        assertEquals( "player Reptile did not fit", playerResponseDTO.getResult().get(2));
+        assertEquals("player Reptile did not fit", playerResponseDTO.getResult().get(2));
     }
 
     @Test
     void findAll() {
         Player player = new Player("Sub zero", "expert");
 
-        repository.save(player);
+        this.repository.save(player);
 
-        List<PlayerDTO> playerDTOList = service.findAll();
+        List<PlayerDTO> playerDTOList = this.service.findAll();
 
         assertEquals(1, playerDTOList.size());
     }

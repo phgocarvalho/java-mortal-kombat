@@ -13,13 +13,13 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
 @DirtiesContext
-@EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" })
+@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 class MessageProducerTest {
 
     @Autowired
@@ -33,14 +33,16 @@ class MessageProducerTest {
     }
 
     @Test
-    void send() {
+    void produce() {
         Player player = new Player("Sub zero", "expert");
-        Event event = new Event(Event.Type.CREATE, player.getName(), player);
+        Event<Player> event = new Event<>(player.getName(), player);
 
-        messageProducer.send(event, topicProperties.novicePlayers).addCallback(sendResult -> {
-            assertTrue(true);
-        }, (KafkaFailureCallback<Integer, String>) kafkaProducerException -> {
-            assertTrue(false);
-        });
+        //TODO Create a specific topic for this test?
+        this.messageProducer.produce(event, this.topicProperties.novicePlayers)
+                .addCallback(sendResult -> {
+                    assertTrue(true);
+                }, (KafkaFailureCallback<Integer, String>) kafkaProducerException -> {
+                    assertTrue(false);
+                });
     }
 }

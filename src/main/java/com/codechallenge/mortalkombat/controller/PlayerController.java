@@ -22,18 +22,18 @@ public class PlayerController {
     private PlayerService service;
 
     @PostMapping
-    public ResponseEntity<?> process(@RequestBody PlayerRequestDTO playerRequestDTO){
+    public ResponseEntity<?> process(@RequestBody PlayerRequestDTO playerRequestDTO) {
         LOGGER.info("Start the player request processing! playerRequestDTO='{}'", playerRequestDTO);
 
         ResponseEntity<?> responseEntity;
 
         try {
-            PlayerResponseDTO playerResponseDTO = service.process(playerRequestDTO);
+            PlayerResponseDTO playerResponseDTO = this.service.process(playerRequestDTO);
 
             responseEntity = ResponseEntity.ok(playerResponseDTO);
 
             LOGGER.info("Success in the player request processing! playerDTO='{}'", playerResponseDTO);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             responseEntity = ResponseEntity.internalServerError().body(exception);
 
             LOGGER.error("Error in the player request processing!", exception);
@@ -43,18 +43,18 @@ public class PlayerController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll() {
         LOGGER.info("Start the players finding!");
 
         ResponseEntity<?> responseEntity;
 
         try {
-            List<PlayerDTO> playerDTOList = service.findAll();
+            List<PlayerDTO> playerDTOList = this.service.findAll();
 
             responseEntity = ResponseEntity.ok(playerDTOList);
 
             LOGGER.info("Success in the players finding! playerDTOList='{}'", playerDTOList);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             responseEntity = ResponseEntity.internalServerError().body(exception);
 
             LOGGER.error("Error in the players finding!", exception);

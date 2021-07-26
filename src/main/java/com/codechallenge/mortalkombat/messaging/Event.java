@@ -1,46 +1,59 @@
 package com.codechallenge.mortalkombat.messaging;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-public class Event<K, T> {
+import java.time.Instant;
 
-    public enum Type { CREATE, DELETE }
+public class Event<V> {
+
+    public enum Type {CREATE}
 
     private Event.Type eventType;
-    private K key;
-    private T data;
-    private LocalDateTime creationDateTime;
 
-    public Event(Type eventType, K key, T data) {
+    private String key;
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
+    private V data;
+
+    private Instant instant;
+
+    public Event() {
+    }
+
+    public Event(String key, V data) {
+        this(Type.CREATE, key, data);
+    }
+
+    public Event(Type eventType, String key, V data) {
         this.eventType = eventType;
         this.key = key;
         this.data = data;
-        this.creationDateTime = LocalDateTime.now();
+        this.instant = Instant.now();
     }
 
     public Type getEventType() {
-        return eventType;
+        return this.eventType;
     }
 
-    public K getKey() {
-        return key;
+    public String getKey() {
+        return this.key;
     }
 
-    public T getData() {
-        return data;
+    public V getData() {
+        return this.data;
     }
 
-    public LocalDateTime getCreationDateTime() {
-        return creationDateTime;
+    public Instant getInstant() {
+        return this.instant;
     }
 
     @Override
     public String toString() {
         return "Event{" +
-                "eventType=" + eventType +
-                ", key=" + key +
-                ", data=" + data +
-                ", creationDateTime=" + creationDateTime +
+                "eventType=" + this.eventType +
+                ", key=" + this.key +
+                ", data=" + this.data +
+                ", instant=" + this.instant +
                 '}';
     }
 }

@@ -11,18 +11,18 @@ public class PlayerResponseDTO {
         this.result = new ArrayList<>();
     }
 
-    public void addResultElement(String resultElement){
-        result.add(resultElement);
+    public void addResultElement(String resultElement) {
+        this.result.add(resultElement);
     }
 
     public List<String> getResult() {
-        return result;
+        return this.result;
     }
 
     @Override
     public String toString() {
         return "PlayerResponseDTO{" +
-                "result=" + result +
+                "result=" + this.result +
                 '}';
     }
 }

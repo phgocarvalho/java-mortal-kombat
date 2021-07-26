@@ -30,7 +30,7 @@ class PlayerRepositoryTest {
     }
 
     @Test
-    public void save(){
+    public void save() {
         Player player = repository.findById(entity.getId()).get();
 
         assertNotNull(player.getId());
@@ -39,7 +39,7 @@ class PlayerRepositoryTest {
     }
 
     @Test
-    public void findAll(){
+    public void findAll() {
         assertEquals(1, repository.count());
     }
 }

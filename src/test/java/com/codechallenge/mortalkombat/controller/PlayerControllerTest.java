@@ -24,7 +24,7 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @DirtiesContext
-@EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" })
+@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 class PlayerControllerTest {
 
     @Autowired
@@ -35,7 +35,7 @@ class PlayerControllerTest {
 
     @BeforeEach
     void setUp() {
-        repository.deleteAll();
+        this.repository.deleteAll();
     }
 
     @Test
@@ -46,7 +46,7 @@ class PlayerControllerTest {
                 new PlayerDTO("Reptile", "meh"));
         PlayerRequestDTO playerRequestDTO = new PlayerRequestDTO(playerDTOList);
 
-        client.post()
+        this.client.post()
                 .uri("/players")
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(playerRequestDTO), PlayerRequestDTO.class)
@@ -67,8 +67,8 @@ class PlayerControllerTest {
     void findAll() {
         Player player = new Player("Sub zero", "expert");
 
-        repository.save(player);
-        client.get()
+        this.repository.save(player);
+        this.client.get()
                 .uri("/players")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()

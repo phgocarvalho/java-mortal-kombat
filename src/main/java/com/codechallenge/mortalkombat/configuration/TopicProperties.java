@@ -10,7 +10,7 @@ public class TopicProperties {
     public String novicePlayers;
 
     public String getNovicePlayers() {
-        return novicePlayers;
+        return this.novicePlayers;
     }
 
     public void setNovicePlayers(String novicePlayers) {

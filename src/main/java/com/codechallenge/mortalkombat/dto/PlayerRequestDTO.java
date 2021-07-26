@@ -14,7 +14,7 @@ public class PlayerRequestDTO {
     }
 
     public List<PlayerDTO> getPlayers() {
-        return players;
+        return this.players;
     }
 
     public void setPlayers(List<PlayerDTO> players) {
@@ -24,7 +24,7 @@ public class PlayerRequestDTO {
     @Override
     public String toString() {
         return "PlayerRequestDTO{" +
-                "players=" + players +
+                "players=" + this.players +
                 '}';
     }
 }

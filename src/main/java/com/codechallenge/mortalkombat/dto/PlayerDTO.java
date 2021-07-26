@@ -7,6 +7,7 @@ import java.util.Objects;
 public class PlayerDTO {
 
     private String name;
+
     private String type;
 
     public PlayerDTO() {
@@ -22,7 +23,7 @@ public class PlayerDTO {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -30,7 +31,7 @@ public class PlayerDTO {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(String type) {
@@ -39,22 +40,26 @@ public class PlayerDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         PlayerDTO playerDTO = (PlayerDTO) o;
-        return Objects.equals(name, playerDTO.name) && Objects.equals(type, playerDTO.type);
+        return Objects.equals(this.name, playerDTO.name) && Objects.equals(this.type, playerDTO.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, type);
+        return Objects.hash(this.name, this.type);
     }
 
     @Override
     public String toString() {
         return "PlayerDTO{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                "name='" + this.name + '\'' +
+                ", type='" + this.type + '\'' +
                 '}';
     }
 }
